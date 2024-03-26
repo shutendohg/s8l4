@@ -1,0 +1,20 @@
+cc = gcc
+libs = -lssl -lcrypto
+
+target = lib_comparison
+src = lib_comparison.c
+
+rule compile
+  command = $cc -o $target $src $libs
+  description = Compiling $target
+
+rule clean
+  command = rm -f $target
+  description = Cleaning $target
+
+build $target: compile
+  target = $target
+  src = $src
+
+build clean: phony
+  command = rm -f $target
