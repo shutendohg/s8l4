@@ -3,6 +3,11 @@ This measures the AES performance of each encryption library.
 
 ## Build
 ``` bash
+ninja
+```
+## Check performances
+``` bash
+./lib_comparison
 ```
 
 ##  Libraries to compare
