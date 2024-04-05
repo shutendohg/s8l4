@@ -13,7 +13,7 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        brew install gcc openssl@3 wolfssl
+        brew install gcc openssl@3 wolfssl　ninja
 
     - name: Setup Environment Variables
       run: |
