@@ -1,20 +1,28 @@
 cc = gcc
-libs = -lssl -lcrypto
 
-target = lib_comparison
-src = lib_comparison.c
+openssl_includes = -I/opt/homebrew/opt/openssl\@3/include
+openssl_libs = -L/opt/homebrew/opt/openssl\@3/lib -lssl -lcrypto
 
-rule compile
-  command = $cc -o $target $src $libs
-  description = Compiling $target
+wolfssl_includes = -I/opt/homebrew/opt/wolfssl/include
+wolfssl_libs = -L/opt/homebrew/opt/wolfssl/lib -lwolfssl
 
-rule clean
-  command = rm -f $target
-  description = Cleaning $target
+rule compile_openssl
+  command = $cc $in $openssl_includes $openssl_libs -DUSE_OPENSSL -o $out
+  description = Compile with OpenSSL $out
 
-build $target: compile
-  target = $target
-  src = $src
+rule compile_wolfssl
+  command = $cc $in $wolfssl_includes $wolfssl_libs -DUSE_WOLFSSL -o $out
+  description = Compile with WolfSSL $out
 
-build clean: phony
-  command = rm -f $target
+rule run_test
+  command = ./$in
+  description = Running test with $in
+
+build lib_comparison_openssl: compile_openssl lib_comparison.c
+build test_openssl: run_test lib_comparison_openssl
+
+# build wolfssl 
+build lib_comparison_wolfssl: compile_wolfssl lib_comparison.c
+build test_wolfssl: run_test lib_comparison_wolfssl
+
+default test_openssl test_wolfssl
