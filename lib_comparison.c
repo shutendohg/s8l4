@@ -121,6 +121,7 @@ int main(void){
 	end = clock();
 	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
 	printf("Decryption: %f seconds\n", cpu_time_used);
+	printf("git test");
 
 	return 0;
 }
